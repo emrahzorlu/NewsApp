@@ -7,8 +7,8 @@
 
 import UIKit
 
-protocol DetailBusinessLayer: BaseViewModelProtocol {
-    var view: DetailDisplayLayer? { get set }
+protocol NewsDetailBusinessLayer: BaseViewModelProtocol {
+    var view: NewsDetailDisplayLayer? { get set }
     func getTitle() -> String
     func getDescription() -> String
     func getUrlToImage() -> String
@@ -19,13 +19,20 @@ protocol DetailBusinessLayer: BaseViewModelProtocol {
     func viewDidLoad()
 }
 
-class NewsDetailViewModel: DetailBusinessLayer {
-    weak var view: DetailDisplayLayer?
+class NewsDetailViewModel: BaseViewModelProtocol {
+    weak var view: NewsDetailDisplayLayer?
     private let news: News
     
     init(news: News) {
         self.news = news
     }
+    
+    func viewDidLoad() {
+        view?.configure()
+    }
+}
+
+extension NewsDetailViewModel: NewsDetailBusinessLayer {
     
     func getTitle() -> String {
         return news.title ?? ""
@@ -52,19 +59,6 @@ class NewsDetailViewModel: DetailBusinessLayer {
     }
     
     func getPublishedDate() -> String {
-        guard let publishedAt = news.publishedAt else { return "" }
-        let dateFormatter = ISO8601DateFormatter()
-        if let date = dateFormatter.date(from: publishedAt) {
-            let displayFormatter = DateFormatter()
-            displayFormatter.dateStyle = .medium
-            displayFormatter.timeStyle = .none
-            return displayFormatter.string(from: date)
-        }
-        return ""
-    }
-
-    func viewDidLoad() {
-        view?.setupViews()
-        view?.configure(with: self)
+        return Date.formattDateString(from: news.publishedAt)
     }
 }

@@ -7,16 +7,19 @@
 
 import Foundation
 
-protocol MainBusinessLayer: BaseViewModelProtocol {
-    var view: MainDisplayLayer? { get set }
+protocol NewsBusinessLayer: BaseViewModelProtocol {
+    var view: NewsDisplayLayer? { get set }
     func getNews()
+    func getMoreNews()
 }
 
-class NewsViewModel: MainBusinessLayer {
-    weak var view: MainDisplayLayer?
+class NewsViewModel {
+    weak var view: NewsDisplayLayer?
     private let networkManager: NetworkServiceProtocol
-    private var news: [News] = []
     private var dataSource: DataSource
+    private var isResultsEmpty: Bool = false
+    private var page = 1
+    
     
     init(networkManager: NetworkServiceProtocol = NetworkManager(), dataSource: DataSource = DataSource()) {
         self.networkManager = networkManager
@@ -24,45 +27,62 @@ class NewsViewModel: MainBusinessLayer {
     }
     
     func viewDidLoad() {
-        view?.setupUI()
+        view?.startAnimating()
         getNews()
     }
-    
-    func getNews() {
-        networkManager.fetchNews { [weak self] result in
-            switch result {
-            case .success(let news):
-                self?.news = news
-                self?.createSection()
-                self?.view?.reloadCollectionView()
-            case .failure(let error):
-                print("Failed to fetch news:", error)
-            }
-            self?.view?.reloadCollectionView()
-        }
-    }
 
-    func createSection() {
+    private func createSection(news: [News]) {
         let section = NewsListSection(cellModels: news) { selectedNews in
             self.didSelectedItem(model: selectedNews)
+        } loadmoreDataHandler:  { [weak self] in
+            self?.getMoreNews()
+            
         }
         dataSource.sections = [section]
         view?.setDataSource(dataSource: dataSource)
-        view?.reloadCollectionView()
     }
     
-    func didSelectedItem(model: News) {
+    private func appendNewResults(_ newResults: [News]) {
+        guard var section = dataSource.sections.first as? NewsListSection else { return }
+        section.appendCellModels(newElements: newResults)
+        dataSource.sections = [section]
+    }
+    
+    private func didSelectedItem(model: News) {
         let detailViewModel = NewsDetailViewModel(news: model)
         let detailViewController = NewsDetailViewController(viewModel: detailViewModel)
         view?.pushViewController(viewController: detailViewController)
     }
+}
+extension NewsViewModel: NewsBusinessLayer {
     
-    func numberOfNews() -> Int {
-        return news.count
+    func getNews() {
+        networkManager.fetchNews(page: 1) { [weak self] result in
+            switch result {
+            case .success(let news):
+                self?.createSection(news: news)
+            case .failure(let error):
+                print("Failed to fetch news:", error)
+            }
+            self?.view?.stopAnimating()
+        }
     }
-
-    func news(at index: Int) -> News? {
-        guard index < news.count else { return nil }
-        return news[index]
+    
+    func getMoreNews() {
+        page += 1
+        networkManager.fetchNews(page: page) { [weak self] result in
+            switch result {
+            case.success(let results):
+                if !results.isEmpty {
+                    self?.appendNewResults(results)
+                    self?.view?.reloadCollectionView()
+                } else {
+                    self?.isResultsEmpty = true
+                }
+            case.failure(let error):
+                print("Error occurred while loading more results: \(error)")
+            }
+            self?.view?.stopAnimating()
+        }
     }
 }

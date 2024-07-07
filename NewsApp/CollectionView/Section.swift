@@ -11,7 +11,11 @@ import UIKit
 struct NewsListSection {
     var cellModels: [News]
     let didSelectHandler: ((News) -> ())?
+    let loadmoreDataHandler: (() -> Void)?
     
+    mutating func appendCellModels(newElements: [News]) {
+        cellModels.append(contentsOf: newElements)
+    }
 }
 
 extension NewsListSection: CollectionSectionProtocol {
@@ -39,5 +43,11 @@ extension NewsListSection: CollectionSectionProtocol {
         let width = (collectionView.bounds.width - 30) / 2
         let height: CGFloat = 275
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionViewWillDisplay(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == cellModels.count - 1 && cellModels.count > 9 {
+            loadmoreDataHandler?()
+        }
     }
 }

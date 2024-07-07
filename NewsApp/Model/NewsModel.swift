@@ -16,19 +16,4 @@ struct News: Decodable {
     let publishedAt: String?
     let url: String?
     let author: String?
-
-    enum CodingKeys: String, CodingKey {
-        case title
-        case description
-        case urlToImage
-        case content
-        case source
-        case publishedAt
-        case url
-        case author
-    }
-
-    struct Source: Decodable {
-        let name: String
-    }
 }

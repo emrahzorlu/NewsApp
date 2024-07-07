@@ -30,7 +30,6 @@ class NewsViewModelTest: XCTestCase {
         
         XCTAssertEqual(service.invocations.count, 1)
         XCTAssertEqual(service.invocations, [.fetchNews])
-        XCTAssertEqual(viewModel.numberOfNews(), 1)
 
         XCTAssertEqual(
             (mockDataSource.sections[0] as? NewsListSection)?.cellModels.map(\.title),
@@ -47,6 +46,38 @@ class NewsViewModelTest: XCTestCase {
         
         XCTAssertEqual(service.invocations.count, 1)
         XCTAssertEqual(service.invocations, [.fetchNews])
-        XCTAssertEqual(viewModel.numberOfNews(), 0)
+    }
+    
+    func testGetMoreNewsSuccess() {
+        let viewModel = buildViewModel()
+        
+        let initialResponse: [News] = [.fake(
+            title: "Initial Title",
+            description: "Initial Description"
+        )]
+        
+        service.mockResult = .success(initialResponse)
+        
+        viewModel.getNews()
+        
+        XCTAssertEqual(service.invocations.count, 1)
+        XCTAssertEqual(service.invocations, [.fetchNews])
+        
+        let moreNewsResponse: [News] = [.fake(
+            title: "More Title",
+            description: "More Description"
+        )]
+        
+        service.mockResult = .success(moreNewsResponse)
+        
+        viewModel.getMoreNews()
+        
+        XCTAssertEqual(service.invocations.count, 2)
+        XCTAssertEqual(service.invocations, [.fetchNews, .fetchNews])
+        
+        XCTAssertEqual(
+            (mockDataSource.sections[0] as? NewsListSection)?.cellModels.map(\.title),
+            initialResponse.map(\.title) + moreNewsResponse.map(\.title)
+        )
     }
 }

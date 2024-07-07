@@ -15,12 +15,13 @@ enum NetworkError: Error {
 }
 
 protocol NetworkServiceProtocol {
-    func fetchNews(completion: @escaping (Result<[News], NetworkError>) -> Void)
+    func fetchNews(page: Int, completion: @escaping (Result<[News], NetworkError>) -> Void)
 }
 
 class NetworkManager: NetworkServiceProtocol {
-    func fetchNews(completion: @escaping (Result<[News], NetworkError>) -> Void) {
-        let urlString = "https://newsapi.org/v2/top-headlines?country=us&pageSize=40&apiKey=7b179609f6384bd49cd78ff837fbe1a0"
+    
+    func fetchNews(page: Int,completion: @escaping (Result<[News], NetworkError>) -> Void) {
+        let urlString = "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&page=\(page)&apiKey=7b179609f6384bd49cd78ff837fbe1a0"
         
         guard let url = URL(string: urlString) else {
             completion(.failure(NetworkError.invalidURL))
@@ -56,8 +57,4 @@ class NetworkManager: NetworkServiceProtocol {
         }
         task.resume()
     }
-}
-
-struct NewsResponse: Decodable {
-    let articles: [News]
 }

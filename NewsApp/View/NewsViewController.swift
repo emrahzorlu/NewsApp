@@ -8,19 +8,20 @@
 import UIKit
 import SnapKit
 
-protocol MainDisplayLayer: BaseControllerProtocol {
-    func setupUI()
+protocol NewsDisplayLayer: BaseControllerProtocol {
+    func startAnimating()
+    func stopAnimating()
     func reloadCollectionView()
     func setDataSource(dataSource: DataSource)
     func pushViewController(viewController: NewsDetailViewController)
 }
 
-final class NewsViewController: BaseViewController, MainDisplayLayer {
+final class NewsViewController: BaseViewController {
     
-    private var viewModel: MainBusinessLayer
+    private var viewModel: NewsBusinessLayer
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    init(viewModel: MainBusinessLayer) {
+    init(viewModel: NewsBusinessLayer) {
         self.viewModel = viewModel
         super.init()
         self.viewModel.view = self
@@ -34,15 +35,17 @@ final class NewsViewController: BaseViewController, MainDisplayLayer {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         viewModel.viewDidLoad()
+        setupUI()
     }
     
-    func setupUI() {
+    private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.width / 2 - 16, height: 275)
         collectionView.collectionViewLayout = layout
         
         view.addSubview(collectionView)
+        view.addSubview(loadingIndicator)
         
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(5)
@@ -50,8 +53,15 @@ final class NewsViewController: BaseViewController, MainDisplayLayer {
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-5)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-5)
         }
-    }
         
+        loadingIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
+}
+extension NewsViewController: NewsDisplayLayer {
+    
     func reloadCollectionView() {
         collectionView.reloadData()
     }

@@ -55,6 +55,7 @@ class NewsCollectionViewCell: UICollectionViewCell {
     
     func configure(with news: News) {
         titleLabel.text = news.title
+        imageView.image = nil
         activityIndicator.startAnimating()
                 
         if let urlToImage = news.urlToImage {

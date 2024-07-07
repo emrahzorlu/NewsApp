@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B103DC682C3A1E500013CF3F /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B103DC672C3A1E500013CF3F /* DateExtension.swift */; };
+		B103DC6A2C3A28CD0013CF3F /* NewsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B103DC692C3A28CD0013CF3F /* NewsResponse.swift */; };
 		B13B22852C399C2200D9AD71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13B22842C399C2200D9AD71 /* AppDelegate.swift */; };
 		B13B22872C399C2200D9AD71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13B22862C399C2200D9AD71 /* SceneDelegate.swift */; };
 		B13B228E2C399C2300D9AD71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B13B228D2C399C2300D9AD71 /* Assets.xcassets */; };
@@ -31,6 +33,7 @@
 		B13B22E82C39A08900D9AD71 /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13B22E72C39A08900D9AD71 /* MockNetworkManager.swift */; };
 		B13B22EA2C39A0A400D9AD71 /* MockNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13B22E92C39A0A400D9AD71 /* MockNews.swift */; };
 		B13B22EC2C39A0AF00D9AD71 /* NewsViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13B22EB2C39A0AF00D9AD71 /* NewsViewModelTest.swift */; };
+		B165ED3F2C39B5F7000B272C /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165ED3E2C39B5F7000B272C /* Source.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B103DC672C3A1E500013CF3F /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		B103DC692C3A28CD0013CF3F /* NewsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsResponse.swift; sourceTree = "<group>"; };
 		B13B22812C399C2200D9AD71 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B13B22842C399C2200D9AD71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B13B22862C399C2200D9AD71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		B13B22E72C39A08900D9AD71 /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
 		B13B22E92C39A0A400D9AD71 /* MockNews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNews.swift; sourceTree = "<group>"; };
 		B13B22EB2C39A0AF00D9AD71 /* NewsViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModelTest.swift; sourceTree = "<group>"; };
+		B165ED3E2C39B5F7000B272C /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				B13B22AD2C399DE200D9AD71 /* UIImageExtension.swift */,
+				B103DC672C3A1E500013CF3F /* DateExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -177,6 +184,8 @@
 			isa = PBXGroup;
 			children = (
 				B13B22B02C399DFB00D9AD71 /* NewsModel.swift */,
+				B165ED3E2C39B5F7000B272C /* Source.swift */,
+				B103DC692C3A28CD0013CF3F /* NewsResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -319,10 +328,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B13B22B12C399DFB00D9AD71 /* NewsModel.swift in Sources */,
+				B103DC6A2C3A28CD0013CF3F /* NewsResponse.swift in Sources */,
 				B13B229E2C399D0300D9AD71 /* Section.swift in Sources */,
 				B13B229A2C399CEB00D9AD71 /* CollectionSectionProtocol.swift in Sources */,
 				B13B22AB2C399DB000D9AD71 /* NetworkManager.swift in Sources */,
 				B13B22BE2C399E8C00D9AD71 /* NewsDetailViewModel.swift in Sources */,
+				B103DC682C3A1E500013CF3F /* DateExtension.swift in Sources */,
 				B13B22B82C399E3400D9AD71 /* NewsCollectionViewCell.swift in Sources */,
 				B13B22A42C399D6500D9AD71 /* BaseControllerProtocol.swift in Sources */,
 				B13B22AE2C399DE200D9AD71 /* UIImageExtension.swift in Sources */,
@@ -332,6 +343,7 @@
 				B13B229C2C399CF300D9AD71 /* DataSource.swift in Sources */,
 				B13B22872C399C2200D9AD71 /* SceneDelegate.swift in Sources */,
 				B13B22B62C399E1F00D9AD71 /* NewsDetailViewController.swift in Sources */,
+				B165ED3F2C39B5F7000B272C /* Source.swift in Sources */,
 				B13B22A62C399D7700D9AD71 /* BaseViewControllerProtocol.swift in Sources */,
 				B13B22A12C399D4400D9AD71 /* BaseViewController.swift in Sources */,
 				B13B22A82C399D9000D9AD71 /* LoadingStatusProtocol.swift in Sources */,
