@@ -21,7 +21,8 @@ protocol NetworkServiceProtocol {
 class NetworkManager: NetworkServiceProtocol {
     
     func fetchNews(page: Int,completion: @escaping (Result<[News], NetworkError>) -> Void) {
-        let urlString = "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&page=\(page)&apiKey=7b179609f6384bd49cd78ff837fbe1a0"
+        let urlString = "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&page=\(page)&apiKey=a4baa658e82a4aeaaa51d5070a8af778"
+        print(urlString)
         
         guard let url = URL(string: urlString) else {
             completion(.failure(NetworkError.invalidURL))
